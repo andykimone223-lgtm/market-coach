@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: #ffffff;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.header {
+  padding: 25px;
+  text-align: center;
+  background: #111936;
+  border-bottom: 1px solid #273154;
+}
+
+.header h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #aab4d0;
+}
+
+.dashboard {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px;
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  background: #111936;
+  border: 1px solid #273154;
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.card h2 {
+  margin-bottom: 15px;
+}
+
+.card p {
+  color: #aab4d0;
+  margin-bottom: 10px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+select,
+button {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #3a466d;
+  background: #0b1020;
+  color: white;
+  font-size: 15px;
+}
+
+button {
+  cursor: pointer;
+  background: #2563eb;
+  border: none;
+  font-weight: bold;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.signal {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.probabilities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.probabilities div {
+  padding: 18px;
+  background: #0b1020;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.probabilities strong {
+  display: block;
+  font-size: 24px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .probabilities {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  select,
+  button {
+    width: 100%;
+  }
+  }
