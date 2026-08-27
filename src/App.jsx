@@ -1,118 +1,67 @@
 import React, { useState } from "react";
-import { getMarketData } from "./services/marketData";
+
+import Home from "./pages/Home";
+import Scanner from "./pages/Scanner";
+import Charts from "./pages/Charts";
+import Setup from "./pages/Setup";
+import Risk from "./pages/Risk";
+import Practice from "./pages/Practice";
+import Backtester from "./pages/Backtester";
+import Journal from "./pages/Journal";
+import Analytics from "./pages/Analytics";
+import Admin from "./pages/Admin";
+
+const pages = [
+  { name: "Home", component: Home },
+  { name: "Scanner", component: Scanner },
+  { name: "Charts", component: Charts },
+  { name: "Setup", component: Setup },
+  { name: "Risk", component: Risk },
+  { name: "Practice", component: Practice },
+  { name: "Backtester", component: Backtester },
+  { name: "Journal", component: Journal },
+  { name: "Analytics", component: Analytics },
+  { name: "Admin", component: Admin },
+];
 
 export default function App() {
-  const [symbol, setSymbol] = useState("EUR/USD");
-  const [timeframe, setTimeframe] = useState("M5");
-  const [status, setStatus] = useState("Ready");
-  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState("Home");
 
-  async function analyzeMarket() {
-    setStatus("Analyzing...");
-    setError("");
-
-    try {
-      const data = await getMarketData(symbol, timeframe);
-
-      console.log("Market data:", data);
-
-      setStatus("Analysis complete");
-    } catch (err) {
-      console.error(err);
-      setStatus("Waiting for backend");
-      setError(err.message);
-    }
-  }
+  const ActivePage =
+    pages.find((page) => page.name === currentPage)?.component || Home;
 
   return (
     <div className="app">
       <header className="header">
-        <h1>Market Analysis</h1>
-        <p>Forex market probability analyzer</p>
+        <div>
+          <h1>Market Analysis</h1>
+          <p>Deterministic Forex Market Analysis</p>
+        </div>
       </header>
 
-      <main className="dashboard">
-        <section className="card">
-          <h2>Market Analysis</h2>
+      <div className="app-layout">
+        <aside className="sidebar">
+          <nav>
+            {pages.map((page) => (
+              <button
+                key={page.name}
+                className={
+                  currentPage === page.name
+                    ? "nav-button active"
+                    : "nav-button"
+                }
+                onClick={() => setCurrentPage(page.name)}
+              >
+                {page.name}
+              </button>
+            ))}
+          </nav>
+        </aside>
 
-          <p>
-            Select a currency pair and timeframe to analyze the market.
-          </p>
-
-          <div className="controls">
-            <select
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value)}
-            >
-              <option>EUR/USD</option>
-              <option>GBP/USD</option>
-              <option>USD/JPY</option>
-              <option>USD/CHF</option>
-              <option>AUD/USD</option>
-              <option>USD/CAD</option>
-              <option>NZD/USD</option>
-            </select>
-
-            <select
-              value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value)}
-            >
-              <option>M5</option>
-              <option>M15</option>
-              <option>M30</option>
-              <option>H1</option>
-              <option>H4</option>
-              <option>D1</option>
-              <option>W1</option>
-            </select>
-
-            <button onClick={analyzeMarket}>
-              Analyze Market
-            </button>
-          </div>
-        </section>
-
-        <section className="card">
-          <h2>Signal</h2>
-
-          <div className="signal">WAIT</div>
-
-          <div className="probabilities">
-            <div>
-              BUY
-              <strong>33%</strong>
-            </div>
-
-            <div>
-              SELL
-              <strong>33%</strong>
-            </div>
-
-            <div>
-              WAIT
-              <strong>34%</strong>
-            </div>
-          </div>
-        </section>
-
-        <section className="card">
-          <h2>System Status</h2>
-
-          <p>
-            Market Data: <strong>{status}</strong>
-          </p>
-
-          {error && (
-            <p>
-              Backend: <strong>{error}</strong>
-            </p>
-          )}
-
-          <p>
-            Analysis Engine: <strong>Ready</strong>
-          </p>
-        </section>
-      </main>
+        <main className="main-content">
+          <ActivePage />
+        </main>
+      </div>
     </div>
   );
-  }
+                }
